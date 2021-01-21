@@ -1,0 +1,39 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../encuesta/encuesta-element.html">
+<link rel="import" href="/bower_components/google-webfont-loader/google-webfont-loader.html">
+<google-webfont-loader id="loader1" loading="{{loading}}" fonts="Lobster"></google-webfont-loader>
+<link rel="import" href="../estilos-compartidos.html">
+
+<dom-module id="mediador-app">
+  <template>
+    <style include="estilos-compartidos">
+      :host {
+        display: block;
+        font-family: Lobster, sans-serif;
+        font-size: 1.5em;
+        background-color: bisque;
+      }
+    </style>
+
+    <div class="label-box">Elemento mediador-app</div>
+    <encuesta-element></encuesta-element>
+
+
+  </template>
+
+  <script>
+    class MediadorApp extends Polymer.Element {
+      static get is() { return 'mediador-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'mediador-app'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(MediadorApp.is, MediadorApp);
+  </script>
+</dom-module>

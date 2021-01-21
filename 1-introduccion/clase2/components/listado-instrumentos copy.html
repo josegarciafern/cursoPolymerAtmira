@@ -1,0 +1,59 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../components/instrumento-musical.html">
+
+<dom-module id="listado-instrumentos">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>        
+        
+        <template is="dom-repeat" items="[[instrumentos]]">
+            <instrumento-musical
+                nombre="[[item.nombre]]"
+                descripcion="[[item.descripcion]]"
+                clasificacion="[[item.clasificacion]]"
+            ></instrumento-musical>
+        </template>
+
+    </template>
+
+    <script>
+        class ListadoInstrumentos extends Polymer.Element {
+            static get is() {
+                return 'listado-instrumentos';
+            }
+            static get properties() {
+                return {
+                    instrumentos: {
+                        type: Array,
+                        value: () => {
+                            return [
+                                {
+                                    nombre: 'Guitarra',
+                                    clasificacion: 'cuerda',
+                                    descripcion: 'Instrumento musical de cuerda'
+                                },
+                                {
+                                    nombre: 'Tambor',
+                                    clasificacion: 'percusion',
+                                    descripcion: 'Instrumento musical de percusión'
+                                },
+                                {
+                                    nombre: 'Piano',
+                                    clasificacion: 'teclado y cuerdas',
+                                    descripcion: 'Instrumento musical de caja de resonancia'
+                                }
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+
+        window.customElements.define(ListadoInstrumentos.is, ListadoInstrumentos);
+
+    </script>
+</dom-module>

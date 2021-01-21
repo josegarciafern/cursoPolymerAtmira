@@ -1,0 +1,82 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../estilos-compartidos.html">
+
+<dom-module id="encuesta-timer">
+    <template>
+        <style include="estilos-compartidos">
+            :host {
+                display: block;
+                background-color: rgb(248, 197, 188);
+            }
+
+            div.timer {
+                font-size: 1.5em;
+                display: inline-block;
+                padding: .5em 2em .5em 2em;
+                border-radius: 1em;
+                background-color: tomato;
+                color: whitesmoke;
+                text-align: left;
+                width: 369px;
+            }
+        </style>
+
+        <div class="label-box">Elemento encuesta-timer</div>
+        <div class="timer">Tiempo restante: [[segundos]]</div>
+        <template is="dom-if" if="[[cancelada]]">
+            <p>Arrastra para volver a empezar</p>
+        </template>
+    </template>
+
+    <script>
+        class EncuestaTimer extends Polymer.Element {
+
+            static get is() {
+                return 'encuesta-timer';
+            }
+
+
+            static get properties() {
+                return {
+                    segundos: {
+                        type: Number,
+                        value: 60,
+                        readOnly: true
+                    },
+                    cancelada: Boolean
+                };
+            }
+
+            cuentaAtras() {
+                if (this.segundos > 0) {
+                    //automáticamente se ha creado un setter para segundos
+                    //_setSegundos()
+                    this._setSegundos(this.segundos - 1);
+                    //console.log(this.segundos);
+                    setTimeout(() => {
+                        this.cuentaAtras();//IMPORTANTE arrow function para no perder this
+                    }, 1000)
+                }else if(this.segundos === 0){
+                    this.dispatchEvent(new CustomEvent('tiempo-finalizado'));
+                }
+            }
+
+            ready() {
+                super.ready();
+                this.cuentaAtras();
+            }
+
+            disconnectCallback(){
+                super.disconnectCallback();
+                clearTimeout(this.marcarConTeclado);
+            }
+
+            reset(){
+               this._setSegundos(60);
+               this.cuentaAtras();
+            }
+        }
+
+        window.customElements.define(EncuestaTimer.is, EncuestaTimer);
+    </script>
+</dom-module>

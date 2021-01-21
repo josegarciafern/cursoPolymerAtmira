@@ -1,0 +1,34 @@
+{
+    "instrumentos": [
+        {
+            "nombre": "Guitarra",
+            "clasificacion": "cuerda",
+            "descripcion": "Instrumento musical de cuerda"
+        },
+        {
+            "nombre": "Tambor",
+            "clasificacion": "percusion",
+            "descripcion": "Instrumento musical de percusión"
+        },
+        {
+            "nombre": "Piano",
+            "clasificacion": "teclado y cuerdas",
+            "descripcion": "Instrumento musical de caja de resonancia"
+        },
+        {
+            "nombre": "Guitarra",
+            "clasificacion": "cuerda",
+            "descripcion": "Instrumento musical de cuerda"
+        },
+        {
+            "nombre": "Tambor",
+            "clasificacion": "percusion",
+            "descripcion": "Instrumento musical de percusión"
+        },
+        {
+            "nombre": "Piano",
+            "clasificacion": "teclado y cuerdas",
+            "descripcion": "Instrumento musical de caja de resonancia"
+        }
+    ]
+}

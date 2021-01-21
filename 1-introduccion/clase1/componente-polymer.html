@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción</title>
+    <style>
+        h1 {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <h1>Componente Tonto</h1>
+    <componente-tonto></componente-tonto>
+    <componente-tonto></componente-tonto>
+
+    <template id="contenido">
+        <style>
+            h1 {
+                color: blue;
+            }
+        </style>
+        <h1>Componente</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, reprehenderit aliquid temporibus ullam perspiciatis tempora libero aut quasi provident accusantium eveniet nostrum, aspernatur obcaecati quos adipisci esse fugit corrupti. Odio?</p>
+    </template>
+
+    <script>
+        class ComponenteTonto extends HTMLElement {
+            constructor() {
+                super();
+                console.log('Hola Mundo');
+                let template = document.getElementById('contenido');
+                this.attachShadow({ mode: 'open' }).innerHTML = template.innerHTML;
+            }
+        }
+
+        customElements.define( 'componente-tonto', ComponenteTonto );
+    </script>
+</body>
+</html>

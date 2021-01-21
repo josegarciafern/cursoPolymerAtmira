@@ -1,0 +1,50 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../components/instrumento-musical.html">
+
+<dom-module id="listado-instrumentos">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+        <iron-ajax
+            url="http://localhost:3000/instrumentos"
+            last-response="{{instrumentos}}"
+            auto
+        ></iron-ajax>
+
+        <template is="dom-repeat" items="[[instrumentos]]">
+            <instrumento-musical
+                nombre="[[item.nombre]]"
+                descripcion="[[item.descripcion]]"
+                clasificacion="[[item.clasificacion]]"
+            ></instrumento-musical>
+        </template>
+
+    </template>
+
+    <script>
+        class ListadoInstrumentos extends Polymer.Element {
+            static get is() {
+                return 'listado-instrumentos';
+            }
+            static get properties() {
+                return {
+                    instrumentos: {
+                        type: Array,
+                        value: () => {
+                            return [];
+                        }
+                    }
+                }
+            }
+        }
+
+        window.customElements.define(ListadoInstrumentos.is, ListadoInstrumentos);
+
+    </script>
+</dom-module>

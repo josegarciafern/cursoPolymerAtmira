@@ -1,0 +1,109 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="encuesta-opcion.html">
+<link rel="import" href="../input-bindeable/input-bindeable.html">
+<link rel="import" href="../estilos-compartidos.html">
+
+<dom-module id="encuesta-preguntas">
+    <template>
+        <style include="estilos-compartidos">
+            :host {
+                display: block;
+                background-color: rgb(238, 220, 230);
+            }
+
+            div {
+                margin-bottom: .7em;
+            }
+
+            .expl {
+                /* margin-left: 1em;
+                width: 633px; */
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                font-size: 12px;
+            }
+        </style>
+
+        <div class="label-box">Elemento encuesta-preguntas</div>
+        <div>[[encuesta.pregunta]]</div>
+        <template is="dom-repeat" items="[[encuesta.opciones]]" as="opcion">
+            <encuesta-opcion respuesta="[[opcion]]" id="[[index]]" marcada="[[marcada]]" on-opcion-marcada="registraOpcionMarcada">
+            </encuesta-opcion>
+        </template>
+        <template is="dom-if" if="[[clicked]]">
+            <span class="expl">El host en la etiqueta del hijo tiene <strong>on-opcion-marcada</strong> que dispara un método que
+                recibe el objeto evento que contiene el dato id que pasamos a los hijos como 'marcada' por herencia de propiedades.
+                Los hijos cuyo id no es igual a la 'marcada' se desmarcan.
+            </span>
+        </template>
+        <h2>Otra respuesta</h2>
+        <input-bindeable label="Añade una respuesta" valor="{{otraRespuesta}}"></input-bindeable>
+        <button on-click="agregarRespuesta">Añadir</button>
+    </template>
+
+    <script>
+
+        class EncuestaPreguntas extends Polymer.Element {
+
+            static get is() {
+                return 'encuesta-preguntas';
+            }
+
+
+            static get properties() {
+                return {
+                    //El padre me envia la propiedad encuesta que es un objeto
+                    encuesta: Object,
+                    marcada: {
+                        type: Number,
+                        value: null
+                    },
+                    otraRespuesta: {
+                        type: String,
+                        value: ''
+                    },
+                    clicked: {
+                        type: Boolean,
+                        value: false
+                    }
+                };
+            }
+
+            registraOpcionMarcada(e) {
+                console.log(e);
+                this.marcada = parseInt(e.detail.id);
+                this.clicked = e.returnValue; //Para saber si se ha hecho click
+            }
+
+            //Eventos de teclado
+            ready() {
+                super.ready();
+                window.addEventListener('keypress', this.marcarConTeclado.bind(this));
+            }
+
+            //Sacamos la función del EventListener para poder eliminarla con el disconnectCallback
+            marcarConTeclado(e) {
+                //console.log(e);
+                let tecladoNum = parseInt(e.key);
+                if (!isNaN(tecladoNum) && tecladoNum > 0 && tecladoNum <= this.encuesta.opciones.length) {
+                    this.marcada = tecladoNum - 1;
+                    //this.marcada = String(this.marcada);
+                    //this.marcada = "2";
+                    console.log(this.marcada);
+                }
+            }
+            disconnectCallback() {
+                super.disconnectCallback();
+                window.removeEventListener('keypress', this.marcarConTeclado);
+            }
+            //Eventos de teclado - End
+
+            agregarRespuesta(e) {
+                this.push('encuesta.opciones', this.otraRespuesta);
+                this.marcada = (this.encuesta.opciones.length - 1);//marcamos la última
+                this.otraRespuesta = '';//vaciamos el input
+            }
+        }
+
+        window.customElements.define(EncuestaPreguntas.is, EncuestaPreguntas);
+    </script>
+</dom-module>

@@ -1,0 +1,107 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="encuesta-timer.html">
+<link rel="import" href="encuesta-preguntas.html">
+<link rel="import" href="../../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
+<link rel="import" href="../estilos-compartidos.html">
+
+
+<dom-module id="encuesta-element">
+    <template>
+        <style include="estilos-compartidos">
+            :host {
+                display: block;
+                background-color: rgb(135, 201, 181);
+            }
+
+            encuesta-timer {
+                user-select: none;
+                cursor: pointer;
+                position: relative;
+                /*para que acepte top y left*/
+                transition-timing-function: cubic-bezier(0, 1.4, 1, 1);
+                transition-duration: .4s;
+            }
+        </style>
+
+        <div class="label-box">Elemento encuesta-element</div>
+        marcada: [[marcada]] | clicked: [[clicked]]
+        <template is="dom-if" if="[[!cancelada]]">
+            <encuesta-preguntas encuesta="[[encuesta]]" marcada="[[marcada]]" clicked="[[clicked]]" on-opcion-marcada="registraOpcionMarcada"></encuesta-preguntas>
+        </template>
+        <encuesta-timer id="timer" on-tiempo-finalizado="cancelarEncuesta" on-track="arrastrar" cancelada="[[cancelada]]"></encuesta-timer>
+
+    </template>
+
+    <script>
+        /* GestureEventListeners se usa para el método arrastrar */
+        class EncuestaElement extends Polymer.GestureEventListeners(Polymer.Element) {
+
+            static get is() {
+                return 'encuesta-element';
+            }
+
+
+            static get properties() {
+                return {
+                    encuesta: {
+                        type: Object,
+                        value: function () {
+                            return {
+                                pregunta: '¿Qué opinas de Angular?',
+                                opciones: [
+                                    'Prefiero React',
+                                    'Creo que es bastante lioso',
+                                    'Ha ido mejorando con las últimas versiones',
+                                    'Excelente, se puede hacer de todo',
+                                    'Es lo que el mercado demanda'
+                                ]
+                            }
+                        }
+                    },
+                    cancelada: {
+                        type: Boolean,
+                        value: false
+                    },
+                    marcada: {
+                        type: Number,
+                        value: null
+                    },
+                    clicked: {
+                        type: Boolean,
+                        value: false
+                    }
+                };
+            }
+
+            registraOpcionMarcada(e) {
+                //console.log(e);
+                this.marcada = parseInt(e.detail.id);
+                this.clicked = e.returnValue;
+            }
+
+            cancelarEncuesta() {
+                this.cancelada = true;
+                this.marcada = null;
+                this.clicked = false;
+            }
+
+            arrastrar(e) {
+                //console.log(e);
+                if (!this.cancelada) {
+                    return 0;
+                }
+                if (e.detail.state == 'end') {
+                    this.$.timer.style.left = '0px';
+                    if (e.detail.dx >= 50) {
+                        this.cancelada = false;
+                        this.$.timer.reset();
+                    }
+                } else {
+                    this.$.timer.style.left = e.detail.dx + 'px';
+                }
+            }
+        }
+
+        window.customElements.define(EncuestaElement.is, EncuestaElement);
+    </script>
+</dom-module>

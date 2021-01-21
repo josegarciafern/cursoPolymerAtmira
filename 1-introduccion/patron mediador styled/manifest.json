@@ -1,0 +1,7 @@
+{
+  "name": "polymer2patronMediador",
+  "short_name": "polymer2patronMediador",
+  "description": "test",
+  "start_url": "/",
+  "display": "standalone"
+}
