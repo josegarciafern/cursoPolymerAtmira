@@ -30,7 +30,7 @@
     <p 
         on-click="toggle"
         class$="[[clase]]"
-    ><iron-icon icon="[[icono]]"></iron-icon><span>[[respuesta]]</span></p>
+    ><iron-icon icon="[[icono]]"></iron-icon><span>[[num]].- [[respuesta]]</span></p>
 
     <!-- <template is="dom-if" if="[[marcada]]">
         <p>Parrafo condicional</p>
@@ -50,7 +50,8 @@
             respuesta: String,
             marcada: {
                 type: Boolean,
-                value: false
+                value: false,
+                reflectToAttribute: true
             },
             icono: {
                 type: String,
@@ -59,7 +60,8 @@
             clase: {
                 type: String,
                 computed: '_calcularClase( marcada )'
-            }
+            },
+            num: Number
         };
       }
 

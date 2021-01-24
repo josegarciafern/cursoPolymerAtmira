@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../sandbox/componente-basico.html">
-<link rel="import" href="../encuesta/encuesta-opcion.html">
+<link rel="import" href="../encuesta/encuesta-pregunta.html">
 
 <dom-module id="clase3-app">
   <template>
@@ -14,15 +14,10 @@
       id="basico"
     ></componente-basico>
     <button on-click="manipular">Manipular propiedad</button> -->
-
-    <encuesta-opcion
-      respuesta="Opcion no marcada"
-    ></encuesta-opcion>
-
-    <encuesta-opcion
-      respuesta="Opcion Marcada"
-      marcada
-    ></encuesta-opcion>
+     <encuesta-pregunta
+      pregunta="Te gusta el curso de Polymer2?"
+     ></encuesta-pregunta>
+    
 
   </template>
 
