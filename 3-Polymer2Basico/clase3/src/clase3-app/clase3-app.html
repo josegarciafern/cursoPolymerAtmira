@@ -15,8 +15,11 @@
     ></componente-basico>
     <button on-click="manipular">Manipular propiedad</button> -->
      <encuesta-pregunta
+      id="encuesta"
       pregunta="Te gusta el curso de Polymer2?"
      ></encuesta-pregunta>
+
+     <button on-click="quitarEncuesta">Elimina encuesta</button>
     
 
   </template>
@@ -39,6 +42,11 @@
       manipular() {
         // this.$.basico.prop = 'algo que me guste';
         this.$.basico.cambiarProp('Desde metodo del componente');
+      }
+
+      quitarEncuesta() {
+        // this.shadowRoot.removeChild(this.$.encuesta);
+        this.$.encuesta.remove();
       }
     }
 

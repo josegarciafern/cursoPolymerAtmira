@@ -50,7 +50,8 @@
                         type: Number,
                         value: 60,
                         readOnly: true
-                    }
+                    },
+                    temporizador: Object
                 };
             }
 
@@ -59,6 +60,26 @@
                 this._setSegundos(100); // Este metodo lo crea Polymer
                 // this.push('respuestas', 'Otra cosa'); //Modifica el array
                 // this.splice('respuestas', 1,1); //Modifica el array
+            }
+
+            ready() {
+                super.ready();
+                this.cuentaAtras();
+            }
+
+            disconnectedCallback() {
+                super.disconnectedCallback();
+                clearTimeout( this.temporizador );
+            }
+
+            cuentaAtras() {
+                this._setSegundos( this.segundos - 1 );
+
+                this.temporizador= setTimeout( () => {
+                        if(this.segundos > 0) {
+                            this.cuentaAtras();
+                        }
+                    }, 1000);
             }
 
         }
