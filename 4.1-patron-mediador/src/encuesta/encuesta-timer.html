@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="encuesta-timer">
+    <template>
+        <style>
+            :host {
+                display: block
+            }
+        </style>
+
+        <!-- <h2>encuesta-timer</h2> -->
+
+    </template>
+
+    <script>
+        
+        class EncuestaTimer extends Polymer.Element {
+            
+            static get is() {
+                return 'encuesta-timer';
+            }
+
+            static get properties() {
+                return {
+                    
+                };
+            }
+
+        }
+
+        window.customElements.define(EncuestaTimer.is, EncuestaTimer);
+    </script>
+</dom-module>

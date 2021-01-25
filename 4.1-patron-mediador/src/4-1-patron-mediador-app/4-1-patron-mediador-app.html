@@ -1,13 +1,16 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../encuesta/encuesta-element.html">
 
-<dom-module id="4-1-patron-mediador-app">
+<dom-module id="patron-mediador-app">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    
+    <encuesta-element></encuesta-element>
+
   </template>
 
   <script>
@@ -15,8 +18,8 @@
      * @customElement
      * @polymer
      */
-    class 41PatronMediadorApp extends Polymer.Element {
-      static get is() { return '4-1-patron-mediador-app'; }
+    class PatronMediadorApp extends Polymer.Element {
+      static get is() { return 'patron-mediador-app'; }
       static get properties() {
         return {
           prop1: {
@@ -27,6 +30,6 @@
       }
     }
 
-    window.customElements.define(41PatronMediadorApp.is, 41PatronMediadorApp);
+    window.customElements.define(PatronMediadorApp.is, PatronMediadorApp);
   </script>
 </dom-module>
