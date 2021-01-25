@@ -17,6 +17,7 @@
      <encuesta-pregunta
       id="encuesta"
       pregunta="Te gusta el curso de Polymer2?"
+      on-marcada="marcadaOpcion"
      ></encuesta-pregunta>
 
      <button on-click="quitarEncuesta">Elimina encuesta</button>
@@ -47,6 +48,9 @@
       quitarEncuesta() {
         // this.shadowRoot.removeChild(this.$.encuesta);
         this.$.encuesta.remove();
+      }
+      marcadaOpcion( e ) {
+        console.log('Abuelo');
       }
     }
 
