@@ -4,11 +4,18 @@
     <template>
         <style>
             :host {
-                display: block
+                display: inline-block;
+                padding: 5px;
+                font-size: .8em;
+                font-weight: bold;
+                background-color: rgb(233, 33, 99);
+                color: #fff;
+                border-radius: 5px;
+                margin-bottom: 10px;
             }
         </style>
 
-        <!-- <h2>encuesta-timer</h2> -->
+        Tiempo restante: [[segundos]]
 
     </template>
 
@@ -22,8 +29,43 @@
 
             static get properties() {
                 return {
-                    
+                    segundos: {
+                        type: Number,
+                        readOnly: true,
+                        value: 5
+                    },
+                    timeout: Object
                 };
+            }
+
+            reset() {
+                this._setSegundos(60);
+                this.cuentaAtras();
+            }
+
+            constructor() {
+                super();
+            }
+
+            ready() {
+                super.ready();
+                this.cuentaAtras();
+            }
+
+            cuentaAtras() {
+                this._setSegundos(this.segundos - 1);
+                if(this.segundos == 0) {
+                    this.dispatchEvent(new CustomEvent('tiempo-finalizado'));
+                } else {
+                    this.timeout = setTimeout( () => {
+                        this.cuentaAtras();
+                    }, 1000 );    
+                }
+            }
+
+            disconnectedCallback() {
+                super.disconnectedCallback();
+                clearTimeout(this.temporizador);
             }
 
         }

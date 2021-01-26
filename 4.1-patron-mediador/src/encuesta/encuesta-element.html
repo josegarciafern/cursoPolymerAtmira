@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
 <link rel="import" href="../encuesta/encuesta-timer.html">
 <link rel="import" href="../encuesta/encuesta-preguntas.html">
 
@@ -6,18 +7,34 @@
     <template>
         <style>
             :host {
-                display: block
+                display: block;
             }
+
+            encuesta-timer {
+                user-select: none;
+                position: relative;
+            } 
         </style>
 
-        <encuesta-timer></encuesta-timer>
-        <encuesta-preguntas cuestion="[[cuestion]]"></encuesta-preguntas>
+        <encuesta-timer
+            id="timer"
+            on-tiempo-finalizado="cancelarEncuesta"
+            on-track="arrastrar"
+        ></encuesta-timer>
+
+        <template is="dom-if" if="[[!cancelada]]">
+            <encuesta-preguntas cuestion="[[cuestion]]"></encuesta-preguntas>        
+        </template>
+
+        <template is="dom-if" if="[[cancelada]]">
+            <p>Arrastra el temporizador para reset</p>
+        </template>
 
     </template>
 
     <script>
        
-        class EncuestaElement extends Polymer.Element {
+        class EncuestaElement extends Polymer.GestureEventListeners(Polymer.Element) {
             
             static get is() {
                 return 'encuesta-element';
@@ -25,6 +42,10 @@
 
             static get properties() {
                 return {
+                    cancelada:{
+                        type: Boolean,
+                        value: false
+                    },
                     cuestion: {
                         type: Object,
                         value: () => ({
@@ -37,6 +58,28 @@
                         })
                     }
                 };
+            }
+
+            cancelarEncuesta() {
+                this.cancelada = true;
+            }
+
+            arrastrar(e) {
+                // console.log(e);
+                if(!this.cancelada) {
+                    return 0;
+                }
+                if(e.detail.state == 'end') {
+                    this.$.timer.style.left = '0px';
+                    // console.log('lo he puesto al final');
+                    if (e.detail.dx >= 50) {
+                        this.cancelada = false;
+                        this.$.timer.reset();
+                    }
+                } else {
+                    // console.log(e.detail.dx);
+                    this.$.timer.style.left = e.detail.dx + 'px';
+                }
             }
 
 
