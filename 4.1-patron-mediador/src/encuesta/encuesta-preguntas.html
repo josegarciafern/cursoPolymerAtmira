@@ -44,6 +44,24 @@
                 this.marcada = e.detail.id;
             }
 
+            ready() {
+                super.ready();
+                window.addEventListener('keypress', this.marcarConTeclado.bind(this) );
+            }
+
+            marcarConTeclado(e) {
+                let teclaNum = parseInt(e.key);
+                    if( !isNaN(teclaNum) && teclaNum >= 1  && teclaNum < this.cuestion.opciones.length + 1 ) {
+                        this.marcada = teclaNum - 1;
+                    }
+            }
+
+            disconnectCallback() {
+                super.disconnectCallback();
+                window.addEventListener('keypress', this.marcarConTeclado);
+            }
+
+
         }
 
         window.customElements.define(EncuestaPreguntas.is, EncuestaPreguntas);
