@@ -1,0 +1,6 @@
+{
+  "name": "binding",
+  "short_name": "binding",
+  "start_url": "/",
+  "display": "standalone"
+}

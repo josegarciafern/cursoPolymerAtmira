@@ -1,0 +1,37 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<dom-module id="binding-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <!-- <h2>Hello [[prop1]]!</h2> -->
+    <paper-input label="Nombre" value={{nombre}}></paper-input>
+    <paper-input label="1 way" value=[[nombre]]></paper-input>
+    
+    <p>Lo que has escrito: [[nombre]]</p>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BindingApp extends Polymer.Element {
+      static get is() { return 'binding-app'; }
+      static get properties() {
+        return {
+          nombre: {
+            type: String,
+            value: ''
+          }
+        };
+      }
+    }
+
+    window.customElements.define(BindingApp.is, BindingApp);
+  </script>
+</dom-module>
