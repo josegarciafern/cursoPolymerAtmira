@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../two-way.html">
+<link rel="import" href="../input-bindeable/input-bindeable.html">
 
 <dom-module id="binding-app">
   <template>
@@ -15,6 +16,9 @@
         
     <p>Lo que has escrito: [[nombre]]</p>
     <two-way nombre="{{nombre}}"></two-way>
+
+    <input-bindeable label="Escribe tu nombre" value="{{nombre}}"></input-bindeable>
+
   </template>
 
   <script>

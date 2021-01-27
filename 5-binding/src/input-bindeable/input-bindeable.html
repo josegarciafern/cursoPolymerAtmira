@@ -1,6 +1,6 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
-<dom-module id="two-way">
+<dom-module id="input-bindeable">
     <template>
         <style>
             :host {
@@ -8,26 +8,26 @@
             }
         </style>
 
-        <p>Mostrando nombre: [[nombre]]</p>
-        <button on-click="borrar">Borrar</button>
+        <span>[[label]]:</span>
+        <input type="text" value="{{value::input}}">
 
     </template>
 
     <script>
         /**
-         * `two-way` Description
+         * `input-bindeable` Description
          *
          * @summary ShortDescription.
          * @customElement
          * @polymer
          * @extends {Polymer.Element}
          */
-        class TwoWay extends Polymer.Element {      
+        class InputBindeable extends Polymer.Element {
             /**
              * String providing the tag name to register the element under.
              */
             static get is() {
-                return 'two-way';
+                return 'input-bindeable';
             }
 
             /**
@@ -35,15 +35,16 @@
              */
             static get properties() {
                 return {
-                    nombre: {
+                    label: {
                         type: String,
+                        value: ''
+                    },
+                    value: {
+                        type: String,
+                        value: '',
                         notify: true
                     }
                 };
-            }
-
-            borrar() {
-                this.nombre = '';
             }
 
             /**
@@ -68,6 +69,6 @@
 
         }
 
-        window.customElements.define(TwoWay.is, TwoWay);
+        window.customElements.define(InputBindeable.is, InputBindeable);
     </script>
 </dom-module>
