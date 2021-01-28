@@ -1,0 +1,98 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="./encuesta-opcion.html">
+<link rel="import" href="../input-bindeable/input-bindeable.html">
+<dom-module id="encuesta-preguntas">
+    <template>
+        <style>
+            :host {
+                display: block
+            }
+        </style>
+        <h2>[[cuestion.pregunta]]</h2>
+        <template is="dom-repeat" items="{{cuestion.opciones}}" as="opcion">
+            <encuesta-opcion
+                respuesta="[[opcion]]"
+                id="[[index]]"
+                marcada="[[marcada]]"
+                on-opcion-marcada="registraOpcionMarcada"
+            ></encuesta-opcion>
+        
+        </template>
+
+        <button on-click="mostrarPista">Dame una pista</button>
+
+        <h2>Otra respuesta</h2>
+        <input-bindeable label="Escriba algo" value={{otraRespuesta}}></input-bindeable>
+        <button on-click="agregarRespuesta">Agregar respuesta</button>
+
+    </template>
+
+    <script>
+        
+        class EncuestaPreguntas extends Polymer.Element {
+            
+            static get is() {
+                return 'encuesta-preguntas';
+            }
+
+            static get properties() {
+                return {
+                    cuestion: Object,
+                    marcada: {
+                        type: Number,
+                        value: null
+                    },
+                    otraRespuesta: {
+                        type: String,
+                        value: ''
+                    }
+                };
+            }
+            
+            registraOpcionMarcada( e ) {
+                // console.log('Padre', e.detail.id);
+                this.marcada = e.detail.id;
+            }
+
+            mostrarPista() {
+                // Mi forma
+                // this.cuestion = {
+                //     ...this.cuestion,
+                //     pregunta: `${this.cuestion.pregunta} ${this.cuestion.pista}`
+                // }
+
+                // Profe
+                this.set('cuestion.pregunta', `${this.cuestion.pregunta} ${this.cuestion.pista}`);
+
+            }
+
+            agregarRespuesta() {
+                this.push( 'cuestion.opciones', this.otraRespuesta );
+                this.marcada = this.cuestion.opciones.length -1;
+                this.otraRespuesta = '';
+            }
+
+            ready() {
+                super.ready();
+                window.addEventListener('keypress', this.marcarConTeclado.bind(this) );
+            }
+
+            marcarConTeclado(e) {
+                let teclaNum = parseInt(e.key);
+                    if( !isNaN(teclaNum) && teclaNum >= 1  && teclaNum < this.cuestion.opciones.length + 1 ) {
+                        this.marcada = teclaNum - 1;
+                    }
+            }
+
+            disconnectCallback() {
+                super.disconnectCallback();
+                window.addEventListener('keypress', this.marcarConTeclado);
+            }
+
+
+        }
+
+        window.customElements.define(EncuestaPreguntas.is, EncuestaPreguntas);
+    </script>
+</dom-module>
