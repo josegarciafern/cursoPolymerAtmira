@@ -1,0 +1,42 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- <link rel="import" href="../input-password/password-strength.html"> -->
+<!-- <link rel="import" href="../input-password/password-element.html"> -->
+<link rel="import" href="../registro/registro-form.html">
+
+
+<dom-module id="observers-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Observerss</h2>
+
+    <!-- <password-strength></password-strength> -->
+    <!-- <password-element></password-element> -->
+    <registro-form></registro-form>
+
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ObserversApp extends Polymer.Element {
+      static get is() { return 'observers-app'; }
+      static get properties() {
+        return {
+          // prop1: {
+          //   type: String,
+          //   value: 'observers-app'
+          // }
+        };
+      }
+    }
+
+    window.customElements.define(ObserversApp.is, ObserversApp);
+  </script>
+</dom-module>

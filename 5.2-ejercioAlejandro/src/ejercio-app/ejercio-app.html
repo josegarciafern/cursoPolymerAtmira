@@ -1,0 +1,56 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../two-way.html">
+<link rel="import" href="../input-bindeable/input-bindeable.html">
+
+<dom-module id="ejercio-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <!-- <h2>Hello [[prop1]]!</h2> -->
+    <paper-input label="Nombre" value=[[nombre]]></paper-input>
+    <paper-input label="1 way" value=[[nombre]]></paper-input>
+        
+    <p>Lo que has escrito: [[nombre]]</p>
+    <two-way nombre="{{nombre}}"></two-way>
+
+    <input-bindeable label="Escribe tu nombre" value="{{nombre}}"></input-bindeable>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class EjercioApp extends Polymer.Element {
+      
+      static get is() { return 'ejercio-app'; }
+      
+      static get properties() {
+        return {
+          nombre: {
+            type: String,
+            value: '',
+            notify: true,
+            observer:'_changeName'
+          }
+        };
+      }
+
+      _changeName( newValue, oldValue ) {
+        console.log('Entra');
+        this.set( 'nombre', newValue);
+    }
+    
+    }
+
+    
+    
+
+    window.customElements.define(EjercioApp.is, EjercioApp);
+  </script>
+</dom-module>
