@@ -89,11 +89,12 @@
                 ];
             }
 
-            _interesesChanged( splices ) {
-                // console.log(splices);
-                if(splices && splices.indexSplices) {
+            _interesesChanged( { indexSplices = [] } = {} ) {
+                // console.log(indexSplices);
+                if( indexSplices ) {
                     // console.log(splices);
-                    if( splices.indexSplices[0].object.length >=3 ) {
+                    // if( indexSplices[0] && indexSplices[0].object.length >=3 ) {
+                    if( this.get( '0.object.length', indexSplices )  >=3 ) {
                         this.maximoIntereses = true;
                     } else {
                         this.maximoIntereses = false;          
@@ -102,7 +103,7 @@
             }
 
             _interesesCasillasChanged(changeRecord) {
-                console.log('changeRecord en una casilla de array:', changeRecord);
+                // console.log('changeRecord en una casilla de array:', changeRecord);
             }
            
 

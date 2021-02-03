@@ -10,14 +10,19 @@
         display: block;
       }
     </style>
-    <!-- <h2>Hello [[prop1]]!</h2> -->
+    
     <paper-input label="Nombre" value=[[nombre]]></paper-input>
     <paper-input label="1 way" value=[[nombre]]></paper-input>
         
     <p>Lo que has escrito: [[nombre]]</p>
     <two-way nombre="{{nombre}}"></two-way>
 
-    <input-bindeable label="Escribe tu nombre" value="{{nombre}}"></input-bindeable>
+    <input-bindeable 
+        label="Escribe tu nombre" 
+        value="[[nombre]]"         
+        on-mi-evento="_miEvento"
+    ></input-bindeable>
+    
 
   </template>
 
@@ -34,17 +39,18 @@
         return {
           nombre: {
             type: String,
-            value: '',
-            notify: true,
-            observer:'_changeName'
+            value: ''
           }
         };
       }
 
-      _changeName( newValue, oldValue ) {
-        console.log('Entra');
-        this.set( 'nombre', newValue);
-    }
+      
+     _miEvento( { detail:{value} } ) {
+        console.log( '_miEvento', value );
+        //this.set( 'nombre', newValue);
+        // this.nombre = e.detail.value;
+        this.nombre = value;
+     }
     
     }
 

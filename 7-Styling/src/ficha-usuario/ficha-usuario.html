@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../estilos-compartidos.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<dom-module id="ficha-usuario">
+    <template>
+        <style include="estilos-compartidos">
+            :host {
+                display: block
+            }
+            .perfil, i{
+                font-size: 0.8em;
+            }
+
+            ::slotted(*) {
+                background-color: #ffffff;
+            }
+
+        </style>
+        
+        <paper-spinner active></paper-spinner>
+
+        <div>
+            <section><slot></slot></section>
+            <div class="perfil"><slot name="perfil"></slot></div>
+            <hr>
+            <i>Twitter <slot name="twitter"></slot></i>
+            <p>Esto es un párrafo</p>
+        </div>
+
+    </template>
+
+    <script>
+        
+        class FichaUsuario extends Polymer.Element {
+            
+            static get is() {
+                return 'ficha-usuario';
+            }
+
+            static get properties() {
+                return {
+                    
+                };
+            }
+
+        }
+
+        window.customElements.define(FichaUsuario.is, FichaUsuario);
+    </script>
+</dom-module>
