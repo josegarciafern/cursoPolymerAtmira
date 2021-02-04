@@ -1,0 +1,19 @@
+
+<script>
+
+    window.EscuelaIT = window.EscuelaIT || {};
+    
+    EscuelaIT.EventlMixin = Polymer.dedupingMixin( (superclass) => class extends superclass {
+        
+        fire( eventName, data = {} ) {
+
+            this.dispatchEvent(new CustomEvent( eventName, {
+                detail: data,
+                bubbles: true,
+                composed: true
+            }));
+        }
+    })
+    
+
+</script>
